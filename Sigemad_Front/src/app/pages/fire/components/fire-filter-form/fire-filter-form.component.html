@@ -1,0 +1,176 @@
+<div class="container-fluid">
+  <form (ngSubmit)="onSubmit()" [formGroup]="formData">
+    <div class="row">
+      <div class="col-4">
+        <sg-field
+          label="Denominación"
+          type="text"
+          [formControl]="getForm('name')"
+          [isRequired]="true"
+        >
+        </sg-field>
+      </div>
+      <div class="col-2">
+        <sg-field
+          label="Territorio"
+          type="select"
+          [options]="territories()"
+          [formControl]="getForm('territory')"
+          [isRequired]="true"
+          (change)="changeTerritory($event)"
+        >
+        </sg-field>
+      </div>
+      <div class="col-2">
+        <sg-field
+          label="País"
+          type="select"
+          [options]="filterCountries()"
+          [formControl]="getForm('country')"
+          (change)="loadCommunities()"
+        >
+        </sg-field>
+
+      </div>
+      <div class="col-2">
+        <sg-field
+          label="CCAA"
+          type="select"
+          [options]="autonomousCommunities()"
+          [formControl]="getForm('autonomousCommunity')"
+          (change)="loadProvinces($event)"
+        >
+        </sg-field>
+
+      </div>
+      <div class="col-2">
+        <sg-field
+          label="Provincia"
+          type="select"
+          [options]="provinces()"
+          [formControl]="getForm('provincia')"
+        >
+        </sg-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-3">
+        <sg-field
+          label="Estado del suceso"
+          type="select"
+          [options]="eventStatus()"
+          [formControl]="getForm('eventStatus')"
+        >
+        </sg-field>
+      </div>
+      <div class="col-3">
+        <sg-field
+          label="Estado del incendio"
+          type="select"
+          [options]="fireStatus()"
+          [formControl]="getForm('fireStatus')"
+        >
+        </sg-field>
+      </div>
+      <div class="col-3">
+        <sg-field
+          label="Nivel/Situación"
+          type="select"
+          [options]="severityLevels()"
+          [formControl]="getForm('severityLevel')"
+        >
+        </sg-field>
+
+      </div>
+      <div class="col-3">
+
+        <sg-field
+          label="Superficie"
+          type="select"
+          [options]="superficiesFiltro()"
+          [formControl]="getForm('affectedArea')"
+        >
+        </sg-field>
+
+
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-3">
+
+        <sg-field
+          label="Movimiento"
+          type="select"
+          [options]="moves()"
+          [formControl]="getForm('move')"
+        >
+        </sg-field>
+
+      </div>
+      <div class="col-3">
+
+        <sg-field
+          label="Entre"
+          type="select"
+          [options]="comparativeDates()"
+          [formControl]="getForm('between')"
+          (change)="changeBetween($event)"
+        >
+        </sg-field>
+      </div>
+      <div class="col-3">
+
+        <sg-field
+          label="Fecha Inicio"
+          type="date"
+          [formControl]="getForm('fechaInicio')"
+        >
+        </sg-field>
+
+      </div>
+      <div class="col-3">
+
+        <sg-field
+          label="Fecha Fin"
+          type="date"
+          [formControl]="getForm('fechaFin')"
+        >
+        </sg-field>
+
+
+      </div>
+    </div>
+
+    <div class="d-flex text-right justify-content-end">
+      <div class="mr-3">
+        <button type="submit" class="btn btn-primary">
+          <img src="/assets/img/search-btn.svg" alt="search-btn" />
+        </button>
+      </div>
+
+      <div style="margin-left: 10px">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          style="background-color: white"
+        >
+          <img src="/assets/img/icon-filter.svg" alt="filter-btn" />
+        </button>
+      </div>
+
+      <div style="margin-left: 10px">
+        <button
+          type="button"
+          (click)="clearFormFilter()"
+          class="btn btn-secondary"
+          style="background-color: white"
+        >
+          <img src="/assets/img/delete-btn.svg" alt="delete-btn" />
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<hr />

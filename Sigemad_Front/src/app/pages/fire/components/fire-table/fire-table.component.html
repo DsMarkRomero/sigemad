@@ -1,0 +1,36 @@
+<app-fire-table-toolbar [fires]="fires"></app-fire-table-toolbar>
+<table width="100%" class="table table-striped mt-3">
+  <thead class="table-secondary">
+    <tr>
+      <th align="left" class="fw-bold font-size-16">Denominación</th>
+      <th align="left" class="fw-bold font-size-16">Fecha inicio</th>
+      <th align="left" class="fw-bold font-size-16">Estado</th>
+      <th align="left" class="fw-bold font-size-16">NGP</th>
+      <th align="left" class="fw-bold font-size-16">Max. NGP</th>
+      <th align="left" class="fw-bold font-size-16">Ubicación</th>
+      <th align="left" class="fw-bold font-size-16">Último registro</th>
+      <th align="left" class="fw-bold font-size-16">Opciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let fire of fires.data">
+      <td>{{ fire.denominacion }}</td>
+      <td>{{ fire.fechaInicio }}</td>
+      <td>{{ fire.estadoSuceso.descripcion }}</td>
+      <td>-</td>
+      <td>-</td>
+      <td>{{ getUbicacion(fire) }}</td>
+      <td>{{ getLastUpdated(fire) }}</td>
+      <td>
+        <a (click)="goToEdit(fire)">
+          <img src="/assets/img/edit-btn.svg" alt="edit-btn" />
+        </a>
+
+        <a href="">
+          <img src="/assets/img/doc-btn.svg" alt="doc-btn" />
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
