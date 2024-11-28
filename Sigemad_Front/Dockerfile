@@ -10,14 +10,14 @@ RUN npm install
 COPY ./ ./ 
 
 # Ejecutar el build en modo producción
-RUN npm run build --prod
+RUN npm run build
 
 # Etapa 2: Servir la aplicación con Nginx
-FROM nginx:latest
+FROM nginx:1.21.6
 WORKDIR /usr/share/nginx/html
 
-# Eliminar archivos predeterminados de Nginx
-RUN rm -rf ./*
+# Eliminar el archivo index.html predeterminado de Nginx
+RUN rm -f index.html
 
 # Copiar los archivos compilados desde la etapa de construcción
 COPY --from=build /app/dist/sigemad/browser/ .
