@@ -1,32 +1,31 @@
-# Etapa 1: Construcción de la aplicación Angular
-FROM node:18-alpine AS build
+# Stage 1: Build the Angular application
+FROM localhost:32001/node:18-alpine AS build
 WORKDIR /app
 
-# Copiar los archivos necesarios para instalar dependencias
+# Copy package files and install dependencies
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm ci --only=production
 
-# Copiar el resto del código fuente al contenedor
-COPY ./ ./ 
+# Copy the rest of the source code into the container
+COPY . . 
 
-# Ejecutar el build en modo producción
+# Build the application in production mode
 RUN npm run build
 
-# Etapa 2: Servir la aplicación con Nginx
-FROM nginx:1.21.6
+# Stage 2: Serve the application with Nginx
+FROM localhost:32001/nginx:1.21.6
 WORKDIR /usr/share/nginx/html
 
-# Eliminar el archivo index.html predeterminado de Nginx
-RUN rm -f index.html
+# Remove default Nginx index.html and copy compiled files
+RUN rm -rf ./*
 
-# Copiar los archivos compilados desde la etapa de construcción
 COPY --from=build /app/dist/sigemad/browser/ .
 
-# Copiar configuración personalizada para Nginx (solo el bloque server)
+# Copy custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Exponer el puerto necesario para Kubernetes
+# Expose the necessary port for Kubernetes
 EXPOSE 80
 
-# Comando por defecto para iniciar Nginx
+# Default command to start Nginx
 CMD ["nginx", "-g", "daemon off;"]
