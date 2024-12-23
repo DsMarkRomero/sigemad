@@ -1,5 +1,5 @@
 # Stage 1: Build the Angular application
-FROM docker-registry.ns-sigemad-pipeline.svc.cluster.local:5000/node:18-alpine AS build
+FROM docker.io/library/node:18-alpine AS build
 WORKDIR /app
 
 # Copy package files and install all dependencies
