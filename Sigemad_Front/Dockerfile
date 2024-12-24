@@ -1,5 +1,5 @@
 # Stage 1: Build the Angular application
-FROM node:18-alpine AS build
+FROM docker-registry.ns-sigemad-pipeline.svc.cluster.local:5000/node:18-alpine AS build
 WORKDIR /app
 
 # Copy package files and install all dependencies
@@ -7,13 +7,13 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 # Copy the rest of the source code into the container
-COPY . .
+COPY . . 
 
 # Build the application in production mode
 RUN npm run build --prod
 
 # Stage 2: Serve the application with Nginx
-FROM nginx:1.21.6
+FROM docker-registry.ns-sigemad-pipeline.svc.cluster.local:5000/nginx:1.21.6
 WORKDIR /usr/share/nginx/html
 
 # Remove default Nginx index.html and copy compiled files
