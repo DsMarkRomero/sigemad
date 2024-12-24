@@ -1,5 +1,5 @@
 # Stage 1: Build the Angular application
-FROM docker.io/library/node:18-alpine
+FROM node:18-alpine AS build
 WORKDIR /app
 
 # Copy package files and install all dependencies
@@ -13,7 +13,7 @@ COPY . .
 RUN npm run build --prod
 
 # Stage 2: Serve the application with Nginx
-FROM docker.io/library/nginx:1.21.6
+FROM nginx:1.21.6
 WORKDIR /usr/share/nginx/html
 
 # Remove default Nginx index.html and copy compiled files
